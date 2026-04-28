@@ -214,6 +214,15 @@
     align-items: center;
     padding: 140px 0 100px;
   }
+  @media (max-width: 959px) {
+    .hero {
+      min-height: 100svh;
+      padding: 120px 0 110px;
+      align-items: flex-start;
+      justify-content: center;
+      text-align: center;
+    }
+  }
 
   /* Fundo sutil com noise — sem foto de fundo */
   .hero-bg {
@@ -252,6 +261,14 @@
   .hero-copy {
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
+  }
+  @media (max-width: 959px) {
+    .hero-copy {
+      align-items: center;
+      text-align: center;
+      margin-top: 20px;
+    }
   }
 
   /* Coluna da foto — esconde no mobile */
@@ -343,52 +360,30 @@
     line-height: 1;
   }
 
-  /* Selo Método UP — agora é fixo global (canto inf. direito) */
+  /* Selo WhatsApp — fixo global (canto inf. direito) */
   .hero-photo-seal {
     position: fixed;
     bottom: 28px;
     right: 28px;
     z-index: 999;
-    width: 86px; height: 86px;
+    width: 64px; height: 64px;
     border-radius: 50%;
-    background: linear-gradient(145deg, #d4a807 0%, #f5c518 50%, #c9960a 100%);
-    color: var(--black);
+    background: #25D366;
+    color: #ffffff;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    text-align: center;
-    padding: 6px;
-    box-shadow: 0 8px 32px -4px rgba(245,197,24,0.6), 0 2px 8px rgba(0,0,0,0.4);
-    animation: sealSpin 18s linear infinite;
+    box-shadow: 0 8px 32px -4px rgba(37,211,102,0.55), 0 2px 8px rgba(0,0,0,0.35);
     text-decoration: none;
     cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
   .hero-photo-seal:hover {
-    animation-play-state: paused;
-    transform: scale(1.08);
-    transition: transform 0.3s ease;
-  }
-  .hero-photo-seal .seal-main {
-    font-family: var(--font-display);
-    font-style: italic;
-    font-size: 11px;
-    font-weight: 700;
-    line-height: 1.1;
-  }
-  .hero-photo-seal .seal-sub {
-    font-size: 8px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-top: 3px;
-    opacity: 0.75;
-  }
-  @keyframes sealSpin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+    transform: scale(1.1);
+    box-shadow: 0 12px 40px -4px rgba(37,211,102,0.7), 0 2px 8px rgba(0,0,0,0.4);
   }
   @media (max-width: 959px) {
-    .hero-photo-seal { width: 72px; height: 72px; bottom: 20px; right: 20px; }
+    .hero-photo-seal { width: 56px; height: 56px; bottom: 20px; right: 20px; }
   }
 
 
@@ -401,11 +396,21 @@
     border-radius: var(--radius-pill);
     background: rgba(245,197,24,0.04);
     font-size: 12px;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
     font-weight: 600;
     color: var(--gold);
     backdrop-filter: blur(8px);
+    white-space: nowrap;
+    max-width: 100%;
+  }
+  @media (max-width: 640px) {
+    .hero-tag {
+      padding: 6px 10px;
+      gap: 6px;
+      font-size: clamp(7.5px, 2.4vw, 11px);
+      letter-spacing: 0.04em;
+    }
   }
   .hero-tag-dot {
     width: 6px; height: 6px; border-radius: 50%; background: var(--gold);
@@ -447,6 +452,9 @@
     max-width: 620px;
     text-wrap: pretty;
   }
+  @media (max-width: 959px) {
+    .hero-sub { margin-left: auto; margin-right: auto; }
+  }
   .hero-sub strong { color: var(--white); font-weight: 600; }
 
   .hero-cta-row {
@@ -477,6 +485,11 @@
     border-top: 1px solid rgba(255,255,255,0.08);
     font-size: 13px;
     color: rgba(255,255,255,0.7);
+  }
+  @media (max-width: 959px) {
+    .hero-meta {
+      justify-content: center;
+    }
   }
   .hero-meta-item { display: flex; align-items: center; gap: 10px; }
   .hero-meta-item svg { color: var(--gold); flex-shrink: 0; }
@@ -622,7 +635,7 @@
   }
   .card-flip:hover { transform: translateY(-6px); border-color: var(--gold); }
 
-  /* As duas imagens empilhadas, uma sobre a outra */
+  /* As duas imagens empilhadas — DEPOIS aparece primeiro */
   .flip-img {
     position: absolute; inset: 0;
     width: 100%; height: 100%;
@@ -630,12 +643,12 @@
     object-position: center top;
     transition: opacity 0.9s ease;
   }
-  .flip-img.flip-antes { z-index: 1; opacity: 1; }
-  .flip-img.flip-depois { z-index: 2; opacity: 0; }
+  .flip-img.flip-antes  { z-index: 2; opacity: 0; }  /* começa oculto */
+  .flip-img.flip-depois { z-index: 1; opacity: 1; }  /* começa visível */
 
-  /* Estado "showing depois" */
-  .card-flip.show-depois .flip-img.flip-antes { opacity: 0; }
-  .card-flip.show-depois .flip-img.flip-depois { opacity: 1; }
+  /* Estado "show-antes" — exibe o antes */
+  .card-flip.show-antes .flip-img.flip-antes  { opacity: 1; }
+  .card-flip.show-antes .flip-img.flip-depois { opacity: 0; }
 
   /* Gradiente suave no rodapé */
   .flip-grad {
@@ -663,21 +676,21 @@
     transition: background 0.6s ease, color 0.6s ease, border-color 0.6s ease;
     border: 1px solid;
   }
-  /* Estado ANTES */
-  .card-flip:not(.show-depois) .flip-badge {
-    background: rgba(10,10,10,0.65);
-    color: rgba(255,255,255,0.75);
-    border-color: rgba(255,255,255,0.2);
-  }
-  .card-flip:not(.show-depois) .flip-badge-dot { background: rgba(255,255,255,0.5); }
-
-  /* Estado DEPOIS */
-  .card-flip.show-depois .flip-badge {
+  /* Estado DEPOIS (inicial) */
+  .card-flip:not(.show-antes) .flip-badge {
     background: rgba(245,197,24,0.18);
     color: var(--gold);
     border-color: var(--gold);
   }
-  .card-flip.show-depois .flip-badge-dot { background: var(--gold); }
+  .card-flip:not(.show-antes) .flip-badge-dot { background: var(--gold); }
+
+  /* Estado ANTES */
+  .card-flip.show-antes .flip-badge {
+    background: rgba(10,10,10,0.65);
+    color: rgba(255,255,255,0.75);
+    border-color: rgba(255,255,255,0.2);
+  }
+  .card-flip.show-antes .flip-badge-dot { background: rgba(255,255,255,0.5); }
 
   .flip-badge-dot {
     width: 6px; height: 6px;
@@ -1936,7 +1949,7 @@
     <div class="hero-copy">
       <span class="hero-tag reveal">
         <span class="hero-tag-dot"></span>
-        Imersão Presencial · Turma 2026
+        Para barbeiros, cabeleireiros e investidores da área da beleza
       </span>
 
       <h1 class="hero-title reveal delay-1">
@@ -1951,9 +1964,6 @@
         <a href="https://wa.me/SEUNUMEROAQUI" target="_blank" rel="noopener" class="btn">
           <span>Quero garantir minha vaga</span>
           <span class="arrow">→</span>
-        </a>
-        <a href="#preco" class="btn btn-ghost">
-          <span>Ver investimento</span>
         </a>
       </div>
 
@@ -2016,10 +2026,11 @@
   target="_blank"
   rel="noopener"
   class="hero-photo-seal"
-  aria-label="Falar no WhatsApp — Método UP"
+  aria-label="Falar no WhatsApp"
 >
-  <span class="seal-main">Método<br>UP</span>
-  <span class="seal-sub">Turma 2026</span>
+  <svg width="34" height="34" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M12.031 0C5.405 0 0 5.418 0 12.06c0 2.13.553 4.21 1.602 6.046L.18 24l6.05-1.583C8.04 23.36 10.016 23.94 12.025 23.94c6.626 0 12.03-5.418 12.03-12.06 0-6.643-5.404-12.06-12.03-12.06zM12.03 21.944c-1.802 0-3.567-.484-5.11-1.398l-.367-.216-3.8.995 1.012-3.71-.237-.378c-.997-1.593-1.524-3.435-1.524-5.353 0-5.54 4.5-10.048 10.038-10.048 5.538 0 10.036 4.508 10.036 10.048 0 5.54-4.5 10.048-10.038 10.048zm5.503-7.514c-.302-.15-1.79-.885-2.067-.988-.277-.102-.478-.152-.68.152-.2.304-.78 1.002-.956 1.206-.176.204-.352.23-.654.078-1.583-.797-2.67-1.464-3.69-3.21-.176-.304.172-.284.468-.88.075-.152.038-.284-.038-.436-.076-.152-.68-1.64-.932-2.247-.246-.59-.496-.51-.68-.52-.176-.01-.377-.01-.58-.01-.2 0-.528.076-.804.38-.277.304-1.056 1.034-1.056 2.522 0 1.488 1.08 2.928 1.232 3.13.15.204 2.14 3.266 5.184 4.58.723.313 1.287.5 1.727.64.726.23 1.387.198 1.905.12.58-.088 1.79-.73 2.042-1.438.252-.708.252-1.316.176-1.442-.076-.126-.277-.202-.58-.354z"/>
+  </svg>
 </a>
 
 <!-- =============================================================
@@ -2060,7 +2071,7 @@
           <div class="flip-grad"></div>
           <div class="flip-badge">
             <span class="flip-badge-dot"></span>
-            <span class="flip-badge-text">Antes</span>
+            <span class="flip-badge-text">Depois</span>
           </div>
           <div class="flip-progress"></div>
           <div class="flip-footer">
@@ -2076,7 +2087,7 @@
           <div class="flip-grad"></div>
           <div class="flip-badge">
             <span class="flip-badge-dot"></span>
-            <span class="flip-badge-text">Antes</span>
+            <span class="flip-badge-text">Depois</span>
           </div>
           <div class="flip-progress"></div>
           <div class="flip-footer">
@@ -2092,7 +2103,7 @@
           <div class="flip-grad"></div>
           <div class="flip-badge">
             <span class="flip-badge-dot"></span>
-            <span class="flip-badge-text">Antes</span>
+            <span class="flip-badge-text">Depois</span>
           </div>
           <div class="flip-progress"></div>
           <div class="flip-footer">
@@ -2108,7 +2119,7 @@
           <div class="flip-grad"></div>
           <div class="flip-badge">
             <span class="flip-badge-dot"></span>
-            <span class="flip-badge-text">Antes</span>
+            <span class="flip-badge-text">Depois</span>
           </div>
           <div class="flip-progress"></div>
           <div class="flip-footer">
@@ -2124,7 +2135,7 @@
           <div class="flip-grad"></div>
           <div class="flip-badge">
             <span class="flip-badge-dot"></span>
-            <span class="flip-badge-text">Antes</span>
+            <span class="flip-badge-text">Depois</span>
           </div>
           <div class="flip-progress"></div>
           <div class="flip-footer">
@@ -2678,16 +2689,16 @@
       const interval = parseInt(card.dataset.flipInterval || '3000', 10);
       const badge    = card.querySelector('.flip-badge-text');
       const progress = card.querySelector('.flip-progress');
-      let isDepois   = false;
+      let isAntes = false; // Começa como depois (default no CSS)
 
       function doFlip() {
-        isDepois = !isDepois;
+        isAntes = !isAntes;
 
         // Troca imagem
-        card.classList.toggle('show-depois', isDepois);
+        card.classList.toggle('show-antes', isAntes);
 
         // Atualiza texto do badge
-        if (badge) badge.textContent = isDepois ? 'Depois' : 'Antes';
+        if (badge) badge.textContent = isAntes ? 'Antes' : 'Depois';
 
         // Reinicia barra de progresso
         if (progress) {
@@ -2721,9 +2732,9 @@
         } else {
           stopFlip(e.target);
           // Reset ao sair da tela
-          e.target.classList.remove('show-depois', 'animating');
+          e.target.classList.remove('show-antes', 'animating');
           const badge = e.target.querySelector('.flip-badge-text');
-          if (badge) badge.textContent = 'Antes';
+          if (badge) badge.textContent = 'Depois';
           e.target._flipTimer = null;
         }
       });
